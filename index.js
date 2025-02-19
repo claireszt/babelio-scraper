@@ -7,7 +7,7 @@ import { userAgent, loginUrl } from "./config.js";
 puppeteerExtra.use(StealthPlugin());
 
 async function scraper() {
-  const browser = await puppeteer.launch({
+  const browser = await puppeteerExtra.launch({
     headless: true, // Change to false to debug
     executablePath:
       process.env.PUPPETEER_EXECUTABLE_PATH || "/usr/bin/google-chrome-stable", // Add this

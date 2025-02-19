@@ -26,6 +26,18 @@ jobs:
       - name: 📦 Install dependencies
         run: npm install
 
+      - name: 🛠️ Debug Environment Variables
+        env:
+          BABELIO_EMAIL: ${{ secrets.BABELIO_EMAIL }}
+          BABELIO_PASSWORD: ${{ secrets.BABELIO_PASSWORD }}
+        run: |
+          echo "🔍 Checking environment variables..."
+          if [[ -z "$BABELIO_EMAIL" || -z "$BABELIO_PASSWORD" ]]; then
+            echo "❌ ERROR: Missing environment variables!"
+            exit 1
+          fi
+          echo "✅ Environment variables loaded successfully."
+
       - name: 📡 Run Scraper
         env:
           BABELIO_EMAIL: ${{ secrets.BABELIO_EMAIL }}

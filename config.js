@@ -9,3 +9,13 @@ export const libraryUrl = "https://www.babelio.com/mabibliotheque.php";
 
 export const email = process.env.BABELIO_EMAIL;
 export const password = process.env.BABELIO_PASSWORD;
+
+console.log("🔍 Checking environment variables:");
+console.log(
+  "BABELIO_EMAIL:",
+  process.env.BABELIO_EMAIL ? "✅ Loaded" : "❌ Not Loaded"
+);
+console.log(
+  "BABELIO_PASSWORD:",
+  process.env.BABELIO_PASSWORD ? "✅ Loaded" : "❌ Not Loaded"
+);

@@ -8,7 +8,10 @@ puppeteerExtra.use(StealthPlugin());
 
 async function scraper() {
   const browser = await puppeteerExtra.launch({
-    headless: true, // Run without UI
+    executablePath: "/usr/bin/google-chrome",
+    headless: true,
+    ignoreDefaultArgs: ["--disable-extensions"],
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
 
   const page = await browser.newPage();

@@ -7,11 +7,11 @@ import { userAgent, loginUrl } from "./config.js";
 puppeteerExtra.use(StealthPlugin());
 
 async function scraper() {
-  const browser = await puppeteerExtra.launch({
-    executablePath: "/usr/bin/google-chrome",
-    headless: true,
-    ignoreDefaultArgs: ["--disable-extensions"],
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  const browser = await puppeteer.launch({
+    headless: true, // Change to false to debug
+    executablePath:
+      process.env.PUPPETEER_EXECUTABLE_PATH || "/usr/bin/google-chrome-stable", // Add this
+    args: ["--no-sandbox", "--disable-setuid-sandbox"], // Necessary for GitHub Actions
   });
 
   const page = await browser.newPage();

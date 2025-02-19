@@ -27,12 +27,15 @@ jobs:
         run: npm install
 
       - name: 📡 Run Scraper
+        env:
+          BABELIO_EMAIL: ${{ secrets.BABELIO_EMAIL }}
+          BABELIO_PASSWORD: ${{ secrets.BABELIO_PASSWORD }}
         run: node index.js
 
       - name: ✅ Commit & Push updated books.json
         run: |
-          git config --global user.email "github-actions@github.com"
-          git config --global user.name "GitHub Actions"
+          git config --global user.name 'github-actions'
+          git config --global user.email 'actions@github.com'
           git add books.json
-          git commit -m "📚 Auto-update books.json" || echo "No changes to commit"
-          git push
+          git commit -m "Updated books.json" || exit 0
+          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/claireszt/babelio-scrapper.git main

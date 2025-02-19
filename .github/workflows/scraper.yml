@@ -9,21 +9,27 @@ jobs:
   scrape:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: 📥 Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Node.js
-        uses: actions/setup-node@v3
+      - name: 🖥️ Set up Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Install dependencies
+      - name: 🌍 Install Chrome for Puppeteer
+        run: |
+          sudo apt update
+          sudo apt install -y wget curl
+          sudo apt install -y google-chrome-stable
+
+      - name: 📦 Install dependencies
         run: npm install
 
-      - name: Run Scraper
+      - name: 📡 Run Scraper
         run: node index.js
 
-      - name: Commit & Push updated books.json
+      - name: ✅ Commit & Push updated books.json
         run: |
           git config --global user.email "github-actions@github.com"
           git config --global user.name "GitHub Actions"

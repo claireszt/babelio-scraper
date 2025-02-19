@@ -1,13 +1,16 @@
-import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
+import puppeteerExtra from "puppeteer-extra";
 import { login } from "./login.js";
 import { scrapeBooks } from "./scraper.js";
 import { userAgent, loginUrl } from "./config.js";
 
-puppeteer.use(StealthPlugin());
+puppeteerExtra.use(StealthPlugin());
 
 async function scraper() {
-  const browser = await puppeteer.launch({ headless: false });
+  const browser = await puppeteerExtra.launch({
+    headless: true, // Run without UI
+  });
+
   const page = await browser.newPage();
   await page.setUserAgent(userAgent);
 

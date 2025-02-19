@@ -1,0 +1,32 @@
+name: Run Scraper Daily
+
+on:
+  schedule:
+    - cron: "0 3 * * *" # Runs every day at 3 AM UTC
+  workflow_dispatch: # Allows manual run
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Scraper
+        run: node index.js
+
+      - name: Commit & Push updated books.json
+        run: |
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git add books.json
+          git commit -m "📚 Auto-update books.json" || echo "No changes to commit"
+          git push

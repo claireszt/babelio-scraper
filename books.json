@@ -24,8 +24,8 @@
   {
     "title": "La Société très secrète des sorcières extraordinaires",
     "author": "Sangu Mandanna",
-    "status": "Currently Reading",
-    "readDate": null,
+    "status": "Read",
+    "readDate": "2025-02-25",
     "link": "https://www.babelio.com/livres/Mandanna-La-Societe-tres-secrete-des-sorcieres-extraordinai/1546515",
     "summary": "Franchissez les portes de la Maison de Nulle Part et laissez-vous envoûter...\nMika Moon a toujours – enfin, presque toujours – respecté trois grandes règles. Cacher sa magie (dans les vidéos qu'elle poste en ligne, elle fait juste semblant d'être une sorcière). Faire profil bas (après tout, qu'est-ce que 14 000 abonnés ?). Et rester à l'écart des autres sorcières (sauf à l'occasion de leur sacro-sainte réunion trimestrielle). La jeune femme a donc pris l'habitude d'être seule et a même passé le plus clair de sa vie d'adulte à déménager en prenant garde de ne jamais s'attacher à qui que ce soit.\nUn jour, pourtant, elle reçoit une intrigante offre d'emploi : devenir la professeure particulière de trois jeunes sorcières dans une mystérieuse propriété du Norfolk baptisée la Maison de Nulle Part. Et voilà qu'en un coup de baguette magique (et contre toutes les règles élémentaires de sorcellerie), elle se retrouve bientôt mêlée aux secrets de ses quatre hôtes, aussi excentriques qu'attentionnés. Parmi eux, Jamie, bibliothécaire irlandais grincheux mais contre toute attente attirant, est prêt à tout pour défendre ses trois petites protégées. Or, à ses yeux, la nouvelle venue est une menace – une menace incroyablement irritante...\nAlors que Mika commence enfin à s'ouvrir aux autres, l'idée d'avoir trouvé une famille – une vraie –, et peut-être même plus, fait peu à peu son chemin dans son esprit. Mais la magie est imprévisible... et si toute cette histoire n'était qu'une bombe prête à exploser ?\nEnfourchez vous aussi votre balai magique et laissez-vous ensorceler par cette romance feel good signée Sangu Mandanna qui vous fera rire aux éclats et fondre de bonheur.",
     "coverImage": "https://m.media-amazon.com/images/I/51NfCs34tCL._SX195_.jpg",
@@ -2198,5 +2198,29 @@
     "coverImage": "https://images-na.ssl-images-amazon.com/images/I/41zmScEUDML._SX210_.jpg",
     "series": null,
     "order": null
+  },
+  {
+    "title": "The Bone Season, tome 5 : The Dark Mirror",
+    "author": "Samantha Shannon",
+    "status": "Currently Reading",
+    "readDate": null,
+    "link": "https://www.babelio.com/livres/Shannon-The-Bone-Season-tome-5--The-Dark-Mirror/1704249",
+    "summary": "Paige Mahoney is outside the Republic of Scion for the first time in more than a decade – but she has no idea how she got to the free world. Half a year has been wiped from her memory.\nAs she makes her way back to the revolution, her journey takes her to Venice, where she learns a dangerous secret – one that could change the face of the war between humans and immortals. Before she can return to London, she must help the Domino Programme unravel the sinister Operation Ventriloquist.\nAnd it soon becomes clear that the one person who could recover her memories – Arcturus Mesarthim – might also hold the key to saving Italy.",
+    "rating": "No rating",
+    "coverImage": "https://m.media-amazon.com/images/I/41PIxrd7KfL._SX195_.jpg",
+    "series": "The Bone Season",
+    "order": "5/7"
+  },
+  {
+    "title": "L'Espace d'un an",
+    "author": "Becky Chambers",
+    "status": "To Read",
+    "readDate": null,
+    "link": "https://www.babelio.com/livres/Chambers-LEspace-dun-an/1428073",
+    "summary": "Rosemary, jeune humaine inexpérimentée, fuit sa famille de richissimes escrocs. Elle est engagée comme greffière à bord du Voyageur, un vaisseau qui creuse des tunnels dans l’espace, où elle apprend à vivre et à travailler avec des représentants de différentes espèces de la galaxie : des reptiles, des amphibiens et, plus étranges encore, d’autres humains.\nLa pilote, couverte d’écailles et de plumes multicolores, a choisi de se couper de ses semblables ; le médecin et cuistot occupe ses six mains à réconforter les gens pour oublier la tragédie qui a condamné son espèce à mort ; le capitaine humain, pacifi ste, aime une alien dont le vaisseau approvisionne les militaires en zone de combat ; l’IA du bord hésite à se transférer dans un corps de chair et de sang...\nLes tribulations du Voyageur, parti pour un trajet d’un an jusqu’à une planète lointaine, composent la tapisserie chaleureuse d’une famille unie par des liens plus fondamentaux que le sang ou les lois : l’amour sous toutes ses formes.",
+    "rating": "4.25",
+    "coverImage": "https://www.babelio.com/couv/CVT_Les-voyageurs-tome-1--LEspace-dun-an_4520.jpg",
+    "series": "Les Voyageurs",
+    "order": "1/4"
   }
 ]

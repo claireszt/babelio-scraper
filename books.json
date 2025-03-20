@@ -299,7 +299,7 @@
   {
     "title": "Atypicalypso, tome 1",
     "author": "Megära Nolhan",
-    "status": "Currently Reading",
+    "status": "To Read",
     "readDate": null,
     "link": "https://www.babelio.com/livres/Nolhan-Atypicalypso-tome-1/1328659",
     "summary": "Damoclès, le plus grand astéroïde jamais observé, se dirige vers la Terre, désertée depuis longtemps. Il va la pulvériser. D'ici quelques secondes, les Humains deviendront orphelins.\nTout le monde s'est réuni pour assister au spectacle le plus morbide de tous les temps. Même Calypso, jeune cambrioleuse aguerrie, qui vient de réussir un énième casse. Mais cette fois, le Bureau Fédéral Intergalactique se lance à ses trousses.\nÀ la tête de cette mission, le Capitaine Grimm Ash entend bien mettre la main sur la voleuse et lui faire payer tous ses crimes.\nMais Calypso n'est pas qui elle prétend être et, ensemble, ils pourraient bien se retrouver au centre d'un complot trop gros pour eux. \"\nATTENTION/OUVRAGE CENSURE\nLOI 1458.B SUR LES LIVRES AU CONTENU CALOMNIEUX.\nOuvrir le présent ouvrage expose son détenteur à une amende de 135 000 unités et à une peine de 3 ans d'emprisonnement.\nSi vous trouver ce livre, merci de le remettre au bureau de la Confédération Intergalactique le plus proche de chez vous.\nSi vous avez une quelconque information sur l'identité de l'auteur.rice ou de ses complices, merci de contacter immédiatement le Bureau Fédéral Intergalactique au numéro suivant : C41YP5O-2456 (0.2 unités la minute depuis une colonie, gratuit depuis une station spatiale de la CI)",
@@ -2220,5 +2220,17 @@
     "coverImage": "https://www.babelio.com/couv/CVT_Les-voyageurs-tome-1--LEspace-dun-an_4520.jpg",
     "series": "Les Voyageurs",
     "order": "1/4"
+  },
+  {
+    "title": "Hunger Games : Lever de soleil sur la moisson",
+    "author": "Suzanne Collins",
+    "status": "Currently Reading",
+    "readDate": null,
+    "link": "https://www.babelio.com/livres/Collins-Hunger-Games--Lever-de-soleil-sur-la-moisson/1798347",
+    "summary": "À l'aube des cinquantièmes Hunger Games, la peur s'empare des districts de Panem. Cette année, en l'honneur des Jeux de l'Expiation, le nombre de tributs arrachés à leur famille pour participer à ces jeux cruels sera doublé !\nDans le district 12, Haymitch Abernathy tente de ne pas trop penser au terrible tirage au sort. Il est concentré sur sa survie et sur la survie de celle qu'il aime.\nAlors, quand le destin le désigne comme tribut, son monde s'écroule.\nForcé de tout quitter, il est emmené au Capitole avec trois autres membres de son district : une amie qu'il considère comme une sœur, un parieur compulsif et la fille la plus prétentieuse de la ville.\nAlors que les Jeux sont sur le point de commencer, Haymitch comprend que les épreuves sont truquées et qu'il n'a aucune chance. Pourtant, quelque chose en lui le pousse à se battre... pour que ce combat dépasse les frontières de l'arène mortelle.",
+    "rating": "4",
+    "coverImage": "https://m.media-amazon.com/images/I/41rgoj8Tj2L._SX195_.jpg",
+    "series": "Hunger Games",
+    "order": "5/5"
   }
 ]

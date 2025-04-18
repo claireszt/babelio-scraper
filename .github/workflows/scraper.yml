@@ -53,11 +53,3 @@ jobs:
         run: |
           set -e 
           node index.js
-
-      - name: ✅ Commit & Push updated books.json
-        run: |
-          git config --global user.name 'github-actions'
-          git config --global user.email 'actions@github.com'
-          git add books.json
-          git commit -m "Updated books.json" || exit 0
-          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/claireszt/babelio-scrapper.git main

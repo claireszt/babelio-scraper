@@ -2,12 +2,17 @@ name: Run Scraper Daily
 
 on:
   schedule:
-    - cron: "0 0 * * *" # Runs every day at 3 AM UTC
-  workflow_dispatch: # Allows manual run
+    - cron: "0 0 * * *"
+  workflow_dispatch:
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        attempt: [1, 2, 3]
     steps:
       - name: 📥 Checkout repository
         uses: actions/checkout@v4
@@ -42,7 +47,12 @@ jobs:
         env:
           BABELIO_EMAIL: ${{ secrets.BABELIO_EMAIL }}
           BABELIO_PASSWORD: ${{ secrets.BABELIO_PASSWORD }}
-        run: node index.js
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+          RELATED_BOOKS_PAGE_ID: ${{ secrets.RELATED_BOOKS_PAGE_ID }}
+        run: |
+          set -e 
+          node index.js
 
       - name: ✅ Commit & Push updated books.json
         run: |

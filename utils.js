@@ -72,3 +72,92 @@ export function formatDate(rawDate) {
   const [day, month, year] = rawDate.split("/");
   return `${year}-${month}-${day}`;
 }
+
+export function capitalizeWords(str) {
+  if (!str) return "";
+
+  const lowercaseWords = new Set([
+    // English articles and conjunctions
+    "a",
+    "an",
+    "and",
+    "as",
+    "at",
+    "but",
+    "by",
+    "for",
+    "in",
+    "nor",
+    "of",
+    "on",
+    "or",
+    "so",
+    "the",
+    "to",
+    "up",
+    "yet",
+    "with",
+
+    // French articles and prepositions
+    "de",
+    "du",
+    "des",
+    "la",
+    "le",
+    "les",
+    "et",
+    "à",
+    "au",
+    "aux",
+    "en",
+    "dans",
+    "sur",
+    "par",
+    "pour",
+    "avec",
+    "sans",
+
+    // Common contractions
+    "d",
+    "l",
+    "qu",
+    "n",
+    "s",
+    "t",
+    "m",
+    "j",
+  ]);
+
+  return str
+    .replace(/’/g, "'") // normalize apostrophes to straight first
+    .split(/(\s+|-|:|«|»|“|”)/) // keep punctuation separators
+    .map((word, i, arr) => {
+      const isSeparator = /\s+|-|:|«|»|“|”/.test(word);
+      if (isSeparator) return word;
+
+      // Possessive or contraction (e.g. d'Albanie, Wilde's)
+      if (word.includes("'")) {
+        const [prefix, suffix] = word.split("'");
+
+        const prefixHandled =
+          lowercaseWords.has(prefix.toLowerCase()) && i !== 0
+            ? prefix.toLowerCase()
+            : capitalize(prefix);
+
+        const suffixHandled = capitalize(suffix);
+
+        return `${prefixHandled}’${suffixHandled}`; // return curly apostrophe
+      }
+
+      const prev = arr[i - 1];
+      const isStart = i === 0 || /[-:«»“”]/.test(prev);
+      return isStart || !lowercaseWords.has(word.toLowerCase())
+        ? capitalize(word)
+        : word.toLowerCase();
+    })
+    .join("");
+}
+
+function capitalize(word) {
+  return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+}

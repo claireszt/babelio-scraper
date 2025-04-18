@@ -1,161 +1,184 @@
 import { scrapeBookDetails } from "./bookDetails.js";
-import { loadExistingBooks, saveUpdatedBooks } from "./utils.js";
 import { libraryUrl } from "./config.js";
+import { upsertBookInNotion } from "./notion.js";
+import { capitalizeWords } from "./utils.js";
+import {
+  getLastBookKey,
+  saveLastBookKey,
+  clearLastBookKey,
+} from "./resumeManager.js";
+
+export async function scrapeBooks(page) {
+  const processed = new Set();
+  let bookCount = 0;
+  let totalBooks = await getTotalBooks(page);
+
+  const lastScrapedKey = getLastBookKey();
+  const shouldResume = !!lastScrapedKey;
+  let foundLast = !shouldResume;
+  let currentPage = libraryUrl;
+
+  while (true) {
+    const pageLoaded = await safeGoto(page, currentPage);
+    if (!pageLoaded) {
+      console.warn("⚠️ Failed to load page, restarting from the beginning...");
+      currentPage = libraryUrl;
+      continue;
+    }
+
+    let pageBooks = await scrapeLibraryPage(page);
+    let retryCount = 0;
+
+    while (
+      pageBooks.length > 0 &&
+      pageBooks[0].title === "Unknown Title" &&
+      retryCount < 3
+    ) {
+      console.warn("⚠️ First book has 'Unknown Title'. Retrying page...");
+      retryCount++;
+      await new Promise((res) => setTimeout(res, 2000));
+      pageBooks = await scrapeLibraryPage(page);
+    }
+
+    if (pageBooks.length === 0 || pageBooks[0].title === "Unknown Title") {
+      console.error("❌ Failed after 3 retries. Exiting loop.");
+      break;
+    }
+
+    for (let book of pageBooks) {
+      const bookKey = `${book.title.toLowerCase()}::${book.author.toLowerCase()}`;
+
+      if (!foundLast) {
+        if (bookKey === lastScrapedKey) {
+          foundLast = true;
+          console.log(`⏩ Skipping ${book.title}`);
+          console.log(`🔁 Resuming`);
+          continue; // 🛑 Skip the last scraped book itself
+        } else {
+          bookCount++;
+          console.log(`⏩ Skipping ${book.title}`);
+          continue;
+        }
+      }
+
+      if (processed.has(bookKey)) continue;
+
+      bookCount++;
+      console.log(
+        `${bookCount}/${totalBooks} 📖 ${book.title}, ${book.author}`
+      );
+
+      if (!book.link) {
+        console.warn(`⚠️ No link for "${book.title}"`);
+        continue;
+      }
+
+      const currentLibraryPage = page.url();
+      const bookPageLoaded = await safeGoto(page, book.link);
+      if (!bookPageLoaded) continue;
+
+      try {
+        const bookDetails = await scrapeBookDetails(page);
+        Object.assign(book, bookDetails);
+        await upsertBookInNotion(book);
+        processed.add(bookKey);
+        saveLastBookKey(bookKey);
+      } catch (error) {
+        console.error("❌ Error handling book:", error);
+      }
+
+      await safeGoto(page, currentLibraryPage);
+    }
+
+    const nextPageUrl = await page.evaluate(() => {
+      return (
+        document.querySelector("a.fleche.icon-next")?.getAttribute("href") ||
+        null
+      );
+    });
+
+    if (!nextPageUrl) break;
+    currentPage = `https://www.babelio.com/${nextPageUrl}`;
+  }
+
+  clearLastBookKey();
+}
 
 async function getTotalBooks(page) {
   return await page.evaluate(() => {
     const booksLink = document.querySelector(
       'a[href="/mabibliotheque.php"].current.menu_link'
     );
-    if (booksLink) {
-      const match = booksLink.innerText.match(/\d+/);
-      return match ? parseInt(match[0], 10) : null;
-    }
-    return null;
+    const match = booksLink?.innerText?.match(/\d+/);
+    return match ? parseInt(match[0], 10) : 0;
   });
 }
 
 async function scrapeLibraryPage(page) {
-  return await page.evaluate(() => {
-    const statusMapping = {
-      "À lire": "To Read",
-      "En cours": "Currently Reading",
-      Lu: "Read",
-      "Pense-bête": "To Download",
-    };
-
-    return Array.from(document.querySelectorAll("tbody tr")).map((row) => {
-      const rawStatus =
-        row.querySelector(".statut .livre_action_status_1")?.innerText.trim() ||
-        "Unknown Status";
-      const status = statusMapping[rawStatus] || rawStatus;
-
-      let readDate = null;
-      if (status === "Read") {
-        const rawDate = row
-          .querySelector(".datepicker_fin")
-          ?.getAttribute("value");
-        if (rawDate) {
-          const [day, month, year] = rawDate.split("/");
-          readDate = `${year}-${month}-${day}`;
-        }
-      }
-
-      return {
-        title:
-          row.querySelector(".titre_livre h2")?.innerText.trim() ||
-          "Unknown Title",
-        author:
-          row.querySelector(".auteur")?.innerText.trim() || "Unknown Author",
-        status,
-        readDate,
-        link: row.querySelector(".titre_livre a")?.href || null,
+  return await page
+    .evaluate(() => {
+      const statusMapping = {
+        "À lire": "To Read",
+        "En cours": "Currently Reading",
+        Lu: "Read",
+        "Pense-bête": "To Download",
       };
-    });
-  });
+
+      return Array.from(document.querySelectorAll("tbody tr")).map((row) => {
+        const rawStatus =
+          row
+            .querySelector(".statut .livre_action_status_1")
+            ?.innerText.trim() || "Unknown Status";
+        const status = statusMapping[rawStatus] || rawStatus;
+
+        let readDate = null;
+        if (status === "Read") {
+          const rawDate = row
+            .querySelector(".datepicker_fin")
+            ?.getAttribute("value");
+          if (rawDate) {
+            const [day, month, year] = rawDate.split("/");
+            readDate = `${year}-${month}-${day}`;
+          }
+        }
+
+        return {
+          title:
+            row.querySelector(".titre_livre h2")?.innerText.trim() ||
+            "Unknown Title",
+          author:
+            row.querySelector(".auteur")?.innerText.trim() || "Unknown Author",
+          status,
+          readDate,
+          link: row.querySelector(".titre_livre a")?.href || null,
+        };
+      });
+    })
+    .then((books) =>
+      books.map((book) => ({
+        ...book,
+        title: capitalizeWords(book.title),
+        author: capitalizeWords(book.author),
+      }))
+    );
 }
 
-export async function scrapeBooks(page) {
-  let books = loadExistingBooks();
-  let pageNumber = 1;
-  let bookCount = 0;
-
-  const totalBooks = await getTotalBooks(page);
-
-  while (true) {
-    const pageBooks = await scrapeLibraryPage(page);
-    if (pageBooks.length === 0) break;
-
-    let booksToSave = [];
-
-    for (let book of pageBooks) {
-      bookCount++;
-
-      const existingBook = books.find(
-        (b) => b.title === book.title && b.author === book.author
-      );
-
-      let changes = [];
-
-      if (!existingBook) {
-        console.log(
-          `${bookCount}/${totalBooks} 📚 Creating: ${book.title}, ${book.author}`
-        );
-
-        try {
-          await page.goto(book.link, {
-            waitUntil: "domcontentloaded",
-            timeout: 60000,
-          });
-        } catch (error) {
-          console.error("❌ Error navigating to book page:", error);
-        }
-
-        const bookDetails = await scrapeBookDetails(page);
-        Object.assign(book, bookDetails);
-
-        books.push(book);
-        booksToSave.push(book);
-        changes.push("new book");
-      } else {
-        if (existingBook.status !== book.status) {
-          existingBook.status = book.status;
-          changes.push("status");
-        }
-        if (existingBook.readDate !== book.readDate) {
-          existingBook.readDate = book.readDate;
-          changes.push("read date");
-        }
-        if (existingBook.rating !== book.rating) {
-          existingBook.rating = book.rating;
-          changes.push("rating");
-        }
-
-        if (changes.length > 0) {
-          console.log(
-            `${bookCount}/${totalBooks} 🔄 Updating ${changes.join(", ")}: ${
-              book.title
-            }, ${book.author}`
-          );
-          booksToSave.push(existingBook);
-        } else {
-          console.log(
-            `${bookCount}/${totalBooks} ✅ No change: ${book.title}, ${book.author}`
-          );
-        }
-      }
-
-      if (booksToSave.length > 0) {
-        saveUpdatedBooks(booksToSave, books);
-        booksToSave = [];
-      }
-
-      try {
-        await page.goto(libraryUrl, {
-          waitUntil: "domcontentloaded",
-          timeout: 60000,
-        });
-      } catch (error) {
-        console.error("❌ Error navigating to library:", error);
-      }
-    }
-
-    const nextPageUrl = await page.evaluate(
-      () =>
-        document.querySelector(".fleche.icon-next")?.getAttribute("href") ||
-        null
-    );
-    if (!nextPageUrl) break;
-
+async function safeGoto(page, url, retries = 3) {
+  for (let attempt = 1; attempt <= retries; attempt++) {
     try {
-      await page.goto(`https://www.babelio.com/${nextPageUrl}`, {
-        waitUntil: "networkidle2",
+      await page.goto(url, {
+        waitUntil: "domcontentloaded",
         timeout: 60000,
       });
+      return true;
     } catch (error) {
-      console.error("❌ Error navigating to next page:", error);
+      if (attempt === retries) {
+        console.error(
+          `❌ Failed to navigate to ${url} after ${retries} attempts`
+        );
+        return false;
+      }
+      await new Promise((res) => setTimeout(res, 2000));
     }
-
-    pageNumber++;
   }
 }

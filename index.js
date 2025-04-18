@@ -6,45 +6,66 @@ import { userAgent, loginUrl } from "./config.js";
 
 puppeteerExtra.use(StealthPlugin());
 
-async function scraper() {
-  const browser = await puppeteerExtra.launch({
-    headless: true, // Change to false to debug
-    executablePath:
-      process.env.PUPPETEER_EXECUTABLE_PATH || "/usr/bin/google-chrome-stable", // Add this
-    args: ["--no-sandbox", "--disable-setuid-sandbox"], // Necessary for GitHub Actions
-  });
+function getLaunchOptions() {
+  const isCI = !!process.env.CI;
 
-  const page = await browser.newPage();
-  await page.setUserAgent(userAgent);
+  const options = {
+    headless: true,
+    protocolTimeout: 180000,
+    args: [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--disable-dev-shm-usage",
+      "--disable-gpu",
+    ],
+  };
 
-  try {
-    await page.goto(loginUrl, {
-      waitUntil: "domcontentloaded",
-      timeout: 60000,
-    });
-  } catch (error) {
-    console.error("❌ Error navigating to login:", error);
+  if (isCI && process.env.PUPPETEER_EXECUTABLE_PATH) {
+    options.executablePath = process.env.PUPPETEER_EXECUTABLE_PATH;
   }
 
-  await login(page);
-  await scrapeBooks(page);
-
-  await browser.close();
-  console.log("🎉 All books scraped! Finishing...");
+  return options;
 }
 
 async function startScraper() {
-  while (true) {
+  let attempt = 0;
+  const maxAttempts = 3;
+
+  while (attempt < maxAttempts) {
+    const browser = await puppeteerExtra.launch(getLaunchOptions());
+    const page = await browser.newPage();
+
     try {
+      await page.setUserAgent(userAgent);
       console.log("🚀 Starting scraper...");
-      await scraper();
+
+      await page.goto(loginUrl, {
+        waitUntil: "domcontentloaded",
+        timeout: 60000,
+      });
+
+      await login(page);
+      await scrapeBooks(page);
+
       console.log("✅ Scraper completed successfully.");
+      await browser.close();
       break;
     } catch (err) {
-      console.error("❌ Scraper failed. Restarting in 5 minutes...", err);
-      await new Promise((resolve) => setTimeout(resolve, 5 * 60 * 1000));
+      attempt++;
+      console.error(`❌ Scraper crashed (attempt ${attempt}):`, err.message);
+      await browser.close();
+
+      if (attempt < maxAttempts) {
+        console.log("🔁 Restarting browser and trying again in 1 minute...");
+        await new Promise((res) => setTimeout(res, 60 * 1000));
+      } else {
+        console.error("❌ Max attempts reached. Giving up.");
+        process.exit(1);
+      }
     }
   }
+
+  console.log("🎉 All books scraped! Finishing...");
 }
 
 startScraper();

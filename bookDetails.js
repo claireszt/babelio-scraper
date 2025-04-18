@@ -16,12 +16,6 @@ export async function scrapeBookDetails(page) {
       document.querySelector(".livre_resume")?.innerText.trim() ||
       "No summary available";
 
-    // Extract rating
-    const rating =
-      document
-        .querySelector(".texte_t2.rating[itemprop='ratingValue']")
-        ?.innerText.trim() || "No rating";
-
     // Extract cover image
     const coverImage =
       document.querySelector("img[itemprop='image']")?.src || "No cover image";
@@ -71,7 +65,6 @@ export async function scrapeBookDetails(page) {
 
     return {
       summary,
-      rating,
       coverImage,
       series: seriesName,
       order: bookOrder,

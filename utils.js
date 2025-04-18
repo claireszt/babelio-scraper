@@ -123,7 +123,7 @@ function postProcessFrenchTitle(title) {
   );
 }
 
-export function logToFile(book, changes, existingPage) {
+export function logToFile(book, changes, notionPage) {
   const logFolder = path.join(__dirname, "logs");
   const logFileName = `${new Date().toISOString().slice(0, 10)}.json`;
   const logFilePath = path.join(logFolder, logFileName);
@@ -142,7 +142,7 @@ export function logToFile(book, changes, existingPage) {
     author: book.author,
     changes: changes.map((field) => ({
       field,
-      oldValue: getNotionValue(existingPage, field),
+      oldValue: getNotionValue(notionPage, field),
       newValue: getBookValue(book, field),
     })),
   };
@@ -151,46 +151,32 @@ export function logToFile(book, changes, existingPage) {
   fs.writeFileSync(logFilePath, JSON.stringify(logs, null, 2), "utf-8");
 }
 
-function getNotionValue(page, field) {
-  const props = page.properties;
-
-  switch (field) {
-    case "Title":
-      return props.Title?.title?.[0]?.text?.content || null;
-    case "Author":
-      return props.Author?.rich_text?.[0]?.text?.content || null;
-    case "Status":
-      return props.Status?.status?.name || null;
-    case "Finish Date":
-      return props["Finish Date"]?.date?.start || null;
-    case "Series":
-      return props.Series?.rich_text?.[0]?.text?.content || null;
-    case "Series Order":
-      return props["Series Order"]?.rich_text?.[0]?.text?.content || null;
-    case "Cover":
-      return page.cover?.external?.url || null;
-    default:
-      return null;
-  }
+function getNotionValue(notionPage, field) {
+  const props = notionPage.properties;
+  return (
+    {
+      Title: props.Title?.title?.[0]?.text?.content || null,
+      Author: props.Author?.rich_text?.[0]?.text?.content || null,
+      Status: props.Status?.status?.name || null,
+      "Finish Date": props["Finish Date"]?.date?.start || null,
+      Series: props.Series?.rich_text?.[0]?.text?.content || null,
+      "Series Order":
+        props["Series Order"]?.rich_text?.[0]?.text?.content || null,
+      Cover: notionPage.cover?.external?.url || null,
+    }[field] || null
+  );
 }
 
 function getBookValue(book, field) {
-  switch (field) {
-    case "Title":
-      return book.title || null;
-    case "Author":
-      return book.author || null;
-    case "Status":
-      return book.status || null;
-    case "Finish Date":
-      return book.readDate || null;
-    case "Series":
-      return book.series || null;
-    case "Series Order":
-      return book.order || null;
-    case "Cover":
-      return book.coverImage || null;
-    default:
-      return null;
-  }
+  return (
+    {
+      Title: book.title,
+      Author: book.author,
+      Status: book.status,
+      "Finish Date": book.readDate,
+      Series: book.series,
+      "Series Order": book.order,
+      Cover: book.coverImage,
+    }[field] || null
+  );
 }

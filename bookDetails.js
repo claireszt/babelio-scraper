@@ -29,6 +29,9 @@ export async function scrapeBookDetails(page) {
       let bookOrder = null;
 
       if (seriesElement) {
+        seriesName = seriesElement.innerText.trim(); // ✅ assign it first
+
+        // 🧼 remove author if appended like "(Kenneth Oppel)"
         const authorName = author.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
         const authorRegex = new RegExp(`\\s*\\(${authorName}\\)$`, "i");
         seriesName = seriesName.replace(authorRegex, "").trim();
@@ -37,7 +40,7 @@ export async function scrapeBookDetails(page) {
           seriesElement.nextSibling?.textContent?.trim() || "";
         const orderMatch = rawTextNode.match(/tome ([\d.]+) sur (\d+)/i);
 
-        if (seriesName && orderMatch) {
+        if (orderMatch) {
           bookOrder = `${orderMatch[1]}/${orderMatch[2]}`;
         }
       }
@@ -53,7 +56,7 @@ export async function scrapeBookDetails(page) {
       return {
         ...bookData,
         series: capitalizeWords(bookData.series),
-        order: bookData.order,
+        order: bookData.order || null,
       };
     });
 }

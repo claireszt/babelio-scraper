@@ -1,6 +1,8 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+// @ts-expect-error: no type definitions for titlecase-french
+import titlecaseFrenchModule from "titlecase-french";
 
 // Resolve __dirname in ES Modules
 const __filename = fileURLToPath(import.meta.url);
@@ -73,91 +75,50 @@ export function formatDate(rawDate) {
   return `${year}-${month}-${day}`;
 }
 
+// Extract the `convert` function from the module
+const titlecaseFrench = titlecaseFrenchModule.convert;
+
+const knownInitials = ["S.A.", "J.K.", "T.S.", "H.P."]; // Expand as needed
+
 export function capitalizeWords(str) {
   if (!str) return "";
 
-  const lowercaseWords = new Set([
-    // English articles and conjunctions
-    "a",
-    "an",
-    "and",
-    "as",
-    "at",
-    "but",
-    "by",
-    "for",
-    "in",
-    "nor",
-    "of",
-    "on",
-    "or",
-    "so",
-    "the",
-    "to",
-    "up",
-    "yet",
-    "with",
+  const standardized = str.replace(/'/g, "’").toLowerCase();
 
-    // French articles and prepositions
-    "de",
-    "du",
-    "des",
-    "la",
-    "le",
-    "les",
-    "et",
-    "à",
-    "au",
-    "aux",
-    "en",
-    "dans",
-    "sur",
-    "par",
-    "pour",
-    "avec",
-    "sans",
+  // ✅ Use the convert function
+  let capitalized = postProcessFrenchTitle(titlecaseFrench(standardized));
 
-    // Common contractions
-    "d",
-    "l",
-    "qu",
-    "n",
-    "s",
-    "t",
-    "m",
-    "j",
-  ]);
+  // Fix known initials like S.A. Chakraborty
+  for (const initials of knownInitials) {
+    const regex = new RegExp(
+      initials.replace(/\./g, "\\.") + "(?=\\s|$)",
+      "gi"
+    );
+    capitalized = capitalized.replace(regex, initials);
+  }
 
-  return str
-    .replace(/’/g, "'") // normalize apostrophes to straight first
-    .split(/(\s+|-|:|«|»|“|”)/) // keep punctuation separators
-    .map((word, i, arr) => {
-      const isSeparator = /\s+|-|:|«|»|“|”/.test(word);
-      if (isSeparator) return word;
+  // Ensure first letter is capitalized
+  capitalized = capitalized.charAt(0).toUpperCase() + capitalized.slice(1);
 
-      // Possessive or contraction (e.g. d'Albanie, Wilde's)
-      if (word.includes("'")) {
-        const [prefix, suffix] = word.split("'");
-
-        const prefixHandled =
-          lowercaseWords.has(prefix.toLowerCase()) && i !== 0
-            ? prefix.toLowerCase()
-            : capitalize(prefix);
-
-        const suffixHandled = capitalize(suffix);
-
-        return `${prefixHandled}’${suffixHandled}`; // return curly apostrophe
-      }
-
-      const prev = arr[i - 1];
-      const isStart = i === 0 || /[-:«»“”]/.test(prev);
-      return isStart || !lowercaseWords.has(word.toLowerCase())
-        ? capitalize(word)
-        : word.toLowerCase();
-    })
-    .join("");
+  return capitalized;
 }
 
-function capitalize(word) {
-  return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+function postProcessFrenchTitle(title) {
+  return (
+    title
+      // Lowercase common French connector words
+      .replace(/\b(Des|Du|De|Et)\b/gu, (match) => match.toLowerCase())
+
+      // Fix accented contractions with proper casing
+      .replace(/\b(D’)(\p{L})/gu, (_, d, letter) => `d’${letter.toUpperCase()}`)
+      .replace(/\b(L’)(\p{L})/gu, (_, l, letter) => `l’${letter.toUpperCase()}`)
+      .replace(
+        /\b(À L’)(\p{L})/gu,
+        (_, àl, letter) => `à l’${letter.toUpperCase()}`
+      )
+
+      // Fix lowercase d’/l’ if they got lowercased after titlecase
+      .replace(/\b(d’)(\p{L})/gu, (_, d, letter) => `d’${letter.toUpperCase()}`)
+      .replace(/\b(l’)(\p{L})/gu, (_, l, letter) => `l’${letter.toUpperCase()}`)
+  );
 }

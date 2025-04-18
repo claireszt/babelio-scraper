@@ -51,6 +51,7 @@ export async function scrapeBooks(page) {
       if (!foundLast) {
         if (bookKey === lastScrapedKey) {
           foundLast = true;
+          bookCount++;
           console.log(`⏩ Skipping ${book.title}`);
           console.log(`🔁 Resuming`);
           continue; // 🛑 Skip the last scraped book itself

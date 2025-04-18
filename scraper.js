@@ -21,9 +21,7 @@ export async function scrapeBooks(page) {
   while (true) {
     const pageLoaded = await safeGoto(page, currentPage);
     if (!pageLoaded) {
-      console.warn("⚠️ Failed to load page, restarting from the beginning...");
-      currentPage = libraryUrl;
-      continue;
+      throw new Error(`❌ Failed to load library page: ${currentPage}`);
     }
 
     let pageBooks = await scrapeLibraryPage(page);

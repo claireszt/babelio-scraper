@@ -20,13 +20,18 @@ export async function scrapeBookDetails(page) {
       const coverImage =
         document.querySelector("img[itemprop='image']")?.src ||
         "No cover image";
+      const author =
+        document.querySelector(".livre_auteurs span")?.innerText.trim() ||
+        "Unknown Author";
 
       const seriesElement = document.querySelector(".col-8 a[href*='/serie/']");
       let seriesName = null;
       let bookOrder = null;
 
       if (seriesElement) {
-        seriesName = seriesElement.innerText.trim();
+        const authorName = author.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        const authorRegex = new RegExp(`\\s*\\(${authorName}\\)$`, "i");
+        seriesName = seriesName.replace(authorRegex, "").trim();
 
         const rawTextNode =
           seriesElement.nextSibling?.textContent?.trim() || "";

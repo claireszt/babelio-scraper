@@ -1,5 +1,6 @@
 import { Client } from "@notionhq/client";
 import dotenv from "dotenv";
+import { logToFile } from "./utils.js";
 dotenv.config();
 
 export const notion = new Client({ auth: process.env.NOTION_TOKEN });
@@ -7,6 +8,14 @@ export const notion = new Client({ auth: process.env.NOTION_TOKEN });
 export async function upsertBookInNotion(book) {
   try {
     const allPages = await getAllPages(process.env.NOTION_DATABASE_ID);
+
+    const normalizeString = (str) =>
+      str
+        .trim()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[’]/g, "'")
+        .toLowerCase();
 
     const existingPage = allPages.find((page) => {
       const pageTitle =
@@ -16,8 +25,8 @@ export async function upsertBookInNotion(book) {
         "";
 
       return (
-        pageTitle === (book.title || "").toLowerCase() &&
-        pageAuthor === (book.author || "").toLowerCase()
+        normalizeString(pageTitle) === normalizeString(book.title || "") &&
+        normalizeString(pageAuthor) === normalizeString(book.author || "")
       );
     });
 
@@ -63,11 +72,11 @@ export async function upsertBookInNotion(book) {
           ...notionPayload,
         });
         console.log(`🔄 Updated ${changes.join(", ")}`);
+        logToFile(book, changes, existingPage);
       } else {
         console.log(`✅ No change`);
       }
     } else {
-      // 🆕 Create if not found
       const summaryText =
         book.summary?.length > 2000
           ? book.summary.slice(0, 1997) + "…"
@@ -116,8 +125,9 @@ function getChangedFields(book, existingPage) {
 
   const changes = [];
 
-  const compare = (a, b) =>
-    (a || "").normalize().trim() !== (b || "").normalize().trim();
+  const compare = (a, b) => {
+    return a !== b;
+  };
 
   if (compare(title, book.title)) {
     changes.push("Title");
@@ -126,7 +136,7 @@ function getChangedFields(book, existingPage) {
   if (status !== book.status) changes.push("Status");
   if (date !== book.readDate) changes.push("Finish Date");
   if (compare(series, book.series)) changes.push("Series");
-  if (compare(order, book.order)) changes.push("Series Order");
+  if (compare(order || "", book.order || "")) changes.push("Series Order");
   if (compare(cover, book.coverImage)) changes.push("Cover");
 
   return changes;

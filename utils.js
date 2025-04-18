@@ -122,3 +122,75 @@ function postProcessFrenchTitle(title) {
       .replace(/\b(l’)(\p{L})/gu, (_, l, letter) => `l’${letter.toUpperCase()}`)
   );
 }
+
+export function logToFile(book, changes, existingPage) {
+  const logFolder = path.join(__dirname, "logs");
+  const logFileName = `${new Date().toISOString().slice(0, 10)}.json`;
+  const logFilePath = path.join(logFolder, logFileName);
+
+  if (!fs.existsSync(logFolder)) {
+    fs.mkdirSync(logFolder);
+  }
+
+  const logs = fs.existsSync(logFilePath)
+    ? JSON.parse(fs.readFileSync(logFilePath))
+    : [];
+
+  const logEntry = {
+    timestamp: new Date().toISOString(),
+    title: book.title,
+    author: book.author,
+    changes: changes.map((field) => ({
+      field,
+      oldValue: getNotionValue(existingPage, field),
+      newValue: getBookValue(book, field),
+    })),
+  };
+
+  logs.push(logEntry);
+  fs.writeFileSync(logFilePath, JSON.stringify(logs, null, 2), "utf-8");
+}
+
+function getNotionValue(page, field) {
+  const props = page.properties;
+
+  switch (field) {
+    case "Title":
+      return props.Title?.title?.[0]?.text?.content || null;
+    case "Author":
+      return props.Author?.rich_text?.[0]?.text?.content || null;
+    case "Status":
+      return props.Status?.status?.name || null;
+    case "Finish Date":
+      return props["Finish Date"]?.date?.start || null;
+    case "Series":
+      return props.Series?.rich_text?.[0]?.text?.content || null;
+    case "Series Order":
+      return props["Series Order"]?.rich_text?.[0]?.text?.content || null;
+    case "Cover":
+      return page.cover?.external?.url || null;
+    default:
+      return null;
+  }
+}
+
+function getBookValue(book, field) {
+  switch (field) {
+    case "Title":
+      return book.title || null;
+    case "Author":
+      return book.author || null;
+    case "Status":
+      return book.status || null;
+    case "Finish Date":
+      return book.readDate || null;
+    case "Series":
+      return book.series || null;
+    case "Series Order":
+      return book.order || null;
+    case "Cover":
+      return book.coverImage || null;
+    default:
+      return null;
+  }
+}

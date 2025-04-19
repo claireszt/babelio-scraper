@@ -29,7 +29,7 @@ function getLaunchOptions() {
 
 async function startScraper() {
   let attempt = 0;
-  const maxAttempts = 3;
+  const maxAttempts = 5;
 
   while (attempt < maxAttempts) {
     const browser = await puppeteerExtra.launch(getLaunchOptions());
@@ -52,7 +52,7 @@ async function startScraper() {
       break;
     } catch (err) {
       attempt++;
-      console.error(`❌ Scraper crashed (attempt ${attempt}):`, err.message);
+      console.error(`❌ Scraper crashed (attempt ${attempt})`);
       await browser.close();
 
       if (attempt < maxAttempts) {

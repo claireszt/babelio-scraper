@@ -23,21 +23,27 @@ async function handleCookies(page) {
 }
 
 export async function login(page) {
-  await handleCookies(page);
-
   try {
+    await handleCookies(page);
+
     console.log("🔑 Logging into Babelio...");
+
+    await page.waitForSelector("input[name='Login']", { timeout: 10000 });
+    await page.waitForSelector("input[name='Password']", { timeout: 10000 });
+
     await page.type("input[name='Login']", email, { delay: 100 });
     await page.type("input[name='Password']", password, { delay: 100 });
+
     await page.click("input[name='sub_btn']");
 
     console.log("✅ Login successful! Navigating to Library...");
+
     await page.goto(libraryUrl, {
       waitUntil: "domcontentloaded",
       timeout: 120000,
     });
   } catch (err) {
-    console.error("❌ Login error:", err);
-    process.exit(1);
+    console.error("❌ Login or navigation error:", err);
+    throw err;
   }
 }

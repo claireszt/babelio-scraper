@@ -24,23 +24,12 @@ export async function scrapeBooks(page) {
       throw new Error(`❌ Failed to load library page: ${currentPage}`);
     }
 
-    let pageBooks = await scrapeLibraryPage(page);
-    let retryCount = 0;
-
-    while (
-      pageBooks.length > 0 &&
-      pageBooks[0].title === "Unknown Title" &&
-      retryCount < 3
-    ) {
-      console.warn("⚠️ First book has 'Unknown Title'. Retrying page...");
-      retryCount++;
-      await new Promise((res) => setTimeout(res, 2000));
-      pageBooks = await scrapeLibraryPage(page);
-    }
+    const pageBooks = await scrapeLibraryPage(page);
 
     if (pageBooks.length === 0 || pageBooks[0].title === "Unknown Title") {
-      console.error("❌ Failed after 3 retries. Exiting loop.");
-      break;
+      const errorMsg = "❌ 'Unknown Title' detected. Restarting scraper...";
+      console.error(errorMsg);
+      throw new Error(errorMsg);
     }
 
     for (let book of pageBooks) {
@@ -52,7 +41,7 @@ export async function scrapeBooks(page) {
           bookCount++;
           console.log(`⏩ Skipping ${book.title}`);
           console.log(`🔁 Resuming`);
-          continue; // 🛑 Skip the last scraped book itself
+          continue;
         } else {
           bookCount++;
           console.log(`⏩ Skipping ${book.title}`);

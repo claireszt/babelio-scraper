@@ -123,60 +123,33 @@ function postProcessFrenchTitle(title) {
   );
 }
 
-export function logToFile(book, changes, notionPage) {
-  const logFolder = path.join(__dirname, "logs");
-  const logFileName = `${new Date().toISOString().slice(0, 10)}.json`;
-  const logFilePath = path.join(logFolder, logFileName);
+const booksFilePath = path.resolve("books.json");
 
-  if (!fs.existsSync(logFolder)) {
-    fs.mkdirSync(logFolder);
+export function saveBookToJSON(book) {
+  let books = [];
+
+  if (fs.existsSync(booksFilePath)) {
+    books = JSON.parse(fs.readFileSync(booksFilePath, "utf-8"));
   }
 
-  const logs = fs.existsSync(logFilePath)
-    ? JSON.parse(fs.readFileSync(logFilePath))
-    : [];
-
-  const logEntry = {
-    timestamp: new Date().toISOString(),
-    title: book.title,
-    author: book.author,
-    changes: changes.map((field) => ({
-      field,
-      oldValue: getNotionValue(notionPage, field),
-      newValue: getBookValue(book, field),
-    })),
-  };
-
-  logs.push(logEntry);
-  fs.writeFileSync(logFilePath, JSON.stringify(logs, null, 2), "utf-8");
-}
-
-function getNotionValue(notionPage, field) {
-  const props = notionPage.properties;
-  return (
-    {
-      Title: props.Title?.title?.[0]?.text?.content || null,
-      Author: props.Author?.rich_text?.[0]?.text?.content || null,
-      Status: props.Status?.status?.name || null,
-      "Finish Date": props["Finish Date"]?.date?.start || null,
-      Series: props.Series?.rich_text?.[0]?.text?.content || null,
-      "Series Order":
-        props["Series Order"]?.rich_text?.[0]?.text?.content || null,
-      Cover: notionPage.cover?.external?.url || null,
-    }[field] || null
+  // Try to find the existing book
+  const index = books.findIndex(
+    (b) =>
+      b.title.toLowerCase() === book.title.toLowerCase() &&
+      b.author.toLowerCase() === book.author.toLowerCase()
   );
-}
 
-function getBookValue(book, field) {
-  return (
-    {
-      Title: book.title,
-      Author: book.author,
-      Status: book.status,
-      "Finish Date": book.readDate,
-      Series: book.series,
-      "Series Order": book.order,
-      Cover: book.coverImage,
-    }[field] || null
-  );
+  // Check if it exists and if it's actually different
+  if (index !== -1) {
+    const existing = books[index];
+    const isSame = JSON.stringify(existing) === JSON.stringify(book);
+
+    if (isSame) return false; // ❌ No update needed
+    books[index] = book; // ✅ Update existing
+  } else {
+    books.push(book); // 🆕 Add new book
+  }
+
+  fs.writeFileSync(booksFilePath, JSON.stringify(books, null, 2), "utf-8");
+  return true; // ✅ Something changed
 }

@@ -1,7 +1,7 @@
 import { Client } from "@notionhq/client";
 import dotenv from "dotenv";
-import { logToFile } from "./utils.js";
 dotenv.config();
+import { saveBookToJSON } from "./utils.js";
 
 export const notion = new Client({ auth: process.env.NOTION_TOKEN });
 
@@ -72,7 +72,19 @@ export async function upsertBookInNotion(book) {
           ...notionPayload,
         });
         console.log(`🔄 Updated ${changes.join(", ")}`);
-        logToFile(book, changes, existingPage);
+        // Attach previous values
+        book._old = {
+          Title: props.Title?.title?.[0]?.text?.content || null,
+          Author: props.Author?.rich_text?.[0]?.text?.content || null,
+          Status: props.Status?.status?.name || null,
+          "Finish Date": props["Finish Date"]?.date?.start || null,
+          Series: props.Series?.rich_text?.[0]?.text?.content || null,
+          "Series Order":
+            props["Series Order"]?.rich_text?.[0]?.text?.content || null,
+          Cover: existingPage.cover?.external?.url || null,
+        };
+
+        saveToBooksJson(book, changes);
       } else {
         console.log(`✅ No change`);
       }
@@ -106,6 +118,10 @@ export async function upsertBookInNotion(book) {
       });
 
       console.log(`✨ Created`);
+    }
+    const updated = saveBookToJSON(book);
+    if (updated) {
+      console.log(`💾 Updated books.json for: ${book.title}`);
     }
   } catch (error) {
     console.error("❌ Notion error:", error);

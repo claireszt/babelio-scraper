@@ -109,7 +109,7 @@ async function scrapeLibraryPage(page) {
         "À lire": "To Read",
         "En cours": "Currently Reading",
         Lu: "Read",
-        "Pense-bête": "To Download",
+        Abandonné: "Abandoned",
       };
 
       return Array.from(document.querySelectorAll("tbody tr")).map((row) => {

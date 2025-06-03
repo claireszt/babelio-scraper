@@ -2084,7 +2084,7 @@
     "status": "Read",
     "readDate": null,
     "link": "https://www.babelio.com/livres/Stendhal-Le-Rouge-et-le-Noir/2908",
-    "summary": "Fils de charpentier, Julien Sorel est trop sensible et trop ambitieux pour suivre la carrière familiale dans la scierie d’une petite ville de province. En secret, il rêve d’une ascension similaire à celle de Napoléon Bonaparte. Julien trouve une place de précepteur dans la maison du maire, Monsieur de Rénal, et noue une relation interdite avec son épouse. Jusqu’au bout, Julien Sorel verra ses ambitions contrecarrées par ses sentiments, qui les conduiront à sa perte...\nC'est une grande œuvre où Stendhal initie le dialogue intérieur. Mais ce personnage qui s'écoute parler sans cesse peut être pénible ..Victor Hugo n'avait pas apprécié et nous pouvons aussi bien le comprendre . Le rouge et le noir est un donc un travail colossal qui restitue à l'exactitude la pensée du héros égocentrique, orgueilleux et ambitieux. Un héros qui par moment retrouve notre sympathie.\nLe rouge et le noir, la passion et l'orgueil ..ou comment l'amour tente de s’inviter chez un homme d'esprit qui a mis en place des défenses, des barricades autour de son cœur. Julien Sorel ou la névrose des classes.\n\n\n\nContributeurs : nicolascalisto, claire_domain_ristorcelli, Val_07, Groucho, celiamodere, salim2014mh, opera64, gteisseire",
+    "summary": "Fils de charpentier, Julien Sorel est trop sensible et trop ambitieux pour suivre la carrière familiale dans la scierie d’une petite ville de province. En secret, il rêve d’une ascension similaire à celle de Napoléon Bonaparte. Julien trouve une place de précepteur dans la maison du maire, Monsieur de Rénal, et noue une relation interdite avec son épouse. Jusqu’au bout, Julien Sorel verra ses ambitions contrecarrées par ses sentiments, qui les conduiront à sa perte...\nC'est une grande œuvre où Stendhal initie le dialogue intérieur. Mais ce personnage qui s'écoute parler sans cesse peut être pénible ..Victor Hugo n'avait pas apprécié et nous pouvons aussi bien le comprendre . Le rouge et le noir est un donc un travail colossal qui restitue à l'exactitude la pensée du héros égocentrique, orgueilleux et ambitieux. Un héros qui par moment retrouve notre sympathie.\nLe rouge et le noir, la passion et l'orgueil ..ou comment l'amour tente de s’inviter chez un homme d'esprit qui a mis en place des défenses, des barricades autour de son cœur. Julien Sorel ou la névrose des classes.\nLe ROUGE ET Le NOIR n’en demeure pas moins la clameur d’une passion incandescente, qui dévore les faibles, les rêveurs, les perdants et les vaincus, sans rédemption possible.\n\n\n\nContributeurs : constantindmitievritch, nicolascalisto, claire_domain_ristorcelli, Val_07, Groucho, celiamodere, salim2014mh, opera64, gteisseire",
     "coverImage": "https://images-na.ssl-images-amazon.com/images/I/41OC4RpS0vL._SX210_.jpg",
     "series": "",
     "order": null
@@ -2308,5 +2308,16 @@
     "coverImage": "https://www.babelio.com/couv/CVT_Vampyria-La-cour-des-tenebres-DITION-COLLECTO_7316.jpg",
     "series": "Vampyria",
     "order": "1/3"
+  },
+  {
+    "title": "Les Testaments",
+    "author": "Margaret Atwood",
+    "status": "To Read",
+    "readDate": null,
+    "link": "https://www.babelio.com/livres/Atwood-Les-testaments/1157793",
+    "summary": "Le chef-d’oeuvre dystopique de Margaret Atwood, La Servante écarlate, est devenu un classique contemporain… auquel elle offre aujourd’hui une spectaculaire conclusion dans cette suite éblouissante.\nQuinze ans après les événements de La Servante écarlate, le régime théocratique de la République de Galaad a toujours la mainmise sur le pouvoir, mais des signes ne trompent pas : il est en train de pourrir de l’intérieur.\nÀ cet instant crucial, les vies de trois femmes radicalement différentes convergent, avec des conséquences potentiellement explosives. Deux d’entre elles ont grandi de part et d’autre de la frontière : l’une à Galaad, comme la fille privilégiée d’un Commandant de haut rang, et l’autre au Canada, où elle participe à des manifestations contre Galaad tout en suivant sur le petit écran les horreurs dont le régime se rend coupable. Aux voix de ces deux jeunes femmes appartenant à la première génération à avoir grandi sous cet ordre nouveau se mêle une troisième, celle d’un des bourreaux du régime, dont le pouvoir repose sur les secrets qu’elle a recueillis sans scrupules pour un usage impitoyable. Et ce sont ces secrets depuis longtemps enfouis qui vont réunir ces trois femmes, forçant chacune à s’accepter et à accepter de défendre ses convictions profondes.\nEn dévoilant l’histoire des femmes des Testaments, Margaret Atwood nous donne à voir les rouages internes de Galaad dans un savant mélange de suspense haletant, de vivacité d’esprit et de virtuosité créatrice.",
+    "coverImage": "https://m.media-amazon.com/images/I/41YyL4HXGzL._SX195_.jpg",
+    "series": "La Servante Ecarlate",
+    "order": "2/2"
   }
 ]

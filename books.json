@@ -357,7 +357,7 @@
     "status": "To Read",
     "readDate": null,
     "link": "https://www.babelio.com/livres/Peckham-Zodiac-Academy-tome-1--Lveil/1338774",
-    "summary": "Je suis Gémeaux. Impulsive. Curieuse. Têtue. Une jumelle. Héritière d’un trône dont je ne sais rien. Et, il s’avèreque je suis Fae.\nMais, bien évidemment, il y a un hic : tout ce que j’ai à faire pour revendiquer mon droit de naissance, c'est\nprouver que je suis la surnaturelle la plus puissante de tout Solaria. Et oui, techniquement, c'est vrai puisque je suis la fille du Roi Barbare. Mais ce qu'ils n'avaient pas mis dans la brochure, c’est que chaque Fae de ce Royaume revendiquerait mon trône s’il le pouvait.\nL’école dans laquelle ils m’ont envoyée est à la fois dangereuse à mort et une p*tain de fête. Les Vampires mordent les élèves les plus faibles dans les couloirs, la meute de Loups-garous organise des orgies dans le Bois Gémissant à chaque pleine lune et je ne parle même pas de cette manière sombre et tordue dont les Sirènes utilisent leurs pouvoirs sur les émotions des gens, ni d’à quel point mon professeur de Magie Cardinale scandaleusement attirant tient ses colles qui laissent les gens en besoin de thérapie.\nLes cours sont complètement intéressants si tu arrives à y survivre. Et ce signe astrologique Gémeaux que j’ai\nmentionné ? Il détermine à présent ma magie élémentaire et affecte ma destinée, alors, apprendre l’astrologie m’est essentiel si je veux mettre mes camarades de classes au tapis – ce qui d’ailleurs est vivement encourager.\nMon plus gros problème, c'est le métamorphe Dragon qui me fait saliver et qui a les yeux sur mon trône. Lui et ses trois psychopathes d’amis sont déterminés à faire de mon séjour ici un enfer.\nTout ce que j’ai à faire, c’est survivre. Mais le destin a sûrement d’autres idées.\nP*tain, pourquoi n’ai-je pas reçu une lettre pour Poudlard",
+    "summary": "Je suis Gémeaux. Impulsive. Curieuse. Têtue. Une jumelle. Héritière d’un trône dont je ne sais rien. Et, il s’avèreque je suis Fae.\nMais, bien évidemment, il y a un hic : tout ce que j’ai à faire pour revendiquer mon droit de naissance, c'est\nprouver que je suis la surnaturelle la plus puissante de tout Solaria. Et oui, techniquement, c'est vrai puisque je suis la fille du Roi Barbare. Mais ce qu'ils n'avaient pas mis dans la brochure, c’est que chaque Fae de ce Royaume revendiquerait mon trône s’il le pouvait.\nL’école dans laquelle ils m’ont envoyée est à la fois dangereuse à mort et une p*tain de fête. Les Vampires mordent les élèves les plus faibles dans les couloirs, la meute de Loups-garous organise des orgies dans le Bois Gémissant à chaque pleine lune et je ne parle même pas de cette manière sombre et tordue dont les Sirènes utilisent leurs pouvoirs sur les émotions des gens, ni d’à quel point mon professeur de Magie Cardinale scandaleusement attirant tient ses colles qui laissent les gens en besoin de thérapie.\nLes cours sont complètement intéressants si tu arrives à y survivre. Et ce signe astrologique Gémeaux que j’ai\nmentionné ? Il détermine à présent ma magie élémentaire et affecte ma destinée, alors, apprendre l’astrologie m’est essentiel si je veux mettre mes camarades de classes au tapis – ce qui d’ailleurs est vivement encourager.\nMon plus gros problème, c'est le métamorphe Dragon qui me fait saliver et qui a les yeux sur mon trône. Lui et ses trois psychopathes d’amis sont déterminés à faire de mon séjour ici un enfer.\nTout ce que j’ai à faire, c’est survivre. Mais le destin a sûrement d’autres idées.\nP*tain, pourquoi n’ai-je pas reçu une lettre pour Poudlard ?",
     "coverImage": "https://m.media-amazon.com/images/I/51uMRrHbqTL._SX195_.jpg",
     "series": "Zodiac Academy",
     "order": "1/15"
@@ -2374,5 +2374,16 @@
     "coverImage": "https://m.media-amazon.com/images/I/51lqiUfw+yL._SX195_.jpg",
     "series": "Emily Wilde",
     "order": "3/3"
+  },
+  {
+    "title": "L’Assassin Royal, Tome 2 : l’Assassin du Roi",
+    "author": "Robin Hobb",
+    "status": "Currently Reading",
+    "readDate": null,
+    "link": "https://www.babelio.com/livres/Hobb-LAssassin-royal-tome-2--LAssassin-du-roi/6864",
+    "summary": "Les pirates rouges sèment la mort et la désolation dans les Six-Duchés. Le royaume est affaibli et ne dispose que de peu de ressources pour les combattre. Le roi est seul, entouré d'une cour qui intrigue, d'une armée qui doute et... d'un assassin royal. Fitz, le bâtard princier, est devenu une arme redoutable et redoutée. Il maîtrise le Vif - la faculté de communiquer avec les animaux - et devient expert dans l'Art. Guerrier accompli, rompu à toutes les façons de tuer, il personnifie autant la justice du roi qu'il est le chevalier servant du prince Vérité. Mais il est aussi un obstacle pour le prince Royal qui veut accéder au trône, et nombreux sont ceux qui souhaitent sa mort...",
+    "coverImage": "https://www.babelio.com/couv/CVT_15529_834673.jpg",
+    "series": "L’Assassin Royal",
+    "order": "2/13"
   }
 ]

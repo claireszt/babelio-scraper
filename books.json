@@ -2385,5 +2385,16 @@
     "coverImage": "https://www.babelio.com/couv/CVT_15529_834673.jpg",
     "series": "L’Assassin Royal",
     "order": "2/13"
+  },
+  {
+    "title": "Anges & Démons",
+    "author": "Dan Brown",
+    "status": "To Read",
+    "readDate": null,
+    "link": "https://www.babelio.com/livres/Brown-Anges-Demons/5106",
+    "summary": "Illuminati... Robert Langdon n'en croit pas ses yeux. Pourtant l'inscription s'étalait bien devant lui, marquée au fer rouge sur le cadavre de Leonardo Vetra, éminent chercheur du Conseil européen pour la recherche nucléaire en Suisse. Pour le célèbre symbologue, ce crime est signé : la société secrète tant redoutée est de retour après quatre siècles de silence. Son but ? Anéantir l'Eglise catholique et son symbole, le Vatican...\n\n\nContributeurs : Jlmax, diego_di_pasquale, Groucho, Analire, Skorpionnan, mgeffroy",
+    "coverImage": "https://www.babelio.com/couv/CVT_6216_600456.jpg",
+    "series": "Robert Langdon",
+    "order": "1/5"
   }
 ]

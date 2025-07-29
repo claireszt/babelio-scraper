@@ -2400,8 +2400,8 @@
   {
     "title": "L’Assassin Royal, Tome 4 : le Poison de la Vengeance",
     "author": "Robin Hobb",
-    "status": "Currently Reading",
-    "readDate": null,
+    "status": "Read",
+    "readDate": "2025-07-27",
     "link": "https://www.babelio.com/livres/Hobb-LAssassin-royal-tome-4--Le-Poison-de-la-vengeanc/14545",
     "summary": "Les pirates, de plus en plus audacieux et téméraires, ont commencé leur invasion dévastatrice. Royal le fourbe, après avoir assassiné le souverain légitime, est monté sur le trône des Six-Duchés. Avec son entourage, le lâche usurpateur s'est replié à l'intérieur des terres. Dans son fief natal, certain de ne plus être inquiété par Fitzchevalerie, son ennemi intime, qu'il croit mort.\nGrossière erreur, car le jeune bâtard, retiré loin de la cour, caché, est toujours vivant. Bien décidé à se venger. Mais il lui faut d'abord réapprendre à vivre, sous la patiente égide de Burrich et d'Umbre. Et choisir sa voie : celle de la civilisation... ou celle d'une empathie plus forte que jamais, grâce au pouvoir du vif, avec oeil-de-nuit ?",
     "coverImage": "https://www.babelio.com/couv/CVT_Lassassin-royal-tome-4--Le-poison-de-la-vengeanc_3072.jpg",
@@ -2418,5 +2418,16 @@
     "coverImage": "https://www.babelio.com/couv/CVT_15529_834677.jpg",
     "series": "L’Assassin Royal",
     "order": "3/13"
+  },
+  {
+    "title": "L’Assassin Royal, Tome 5 : la Voie Magique",
+    "author": "Robin Hobb",
+    "status": "Currently Reading",
+    "readDate": null,
+    "link": "https://www.babelio.com/livres/Hobb-LAssassin-royal-tome-5--La-voie-magique/7214",
+    "summary": "Le roi Vérité est vivant ! Il a imposé une ultime mission à Fitz: \"Rejoins-moi !\"\nLoin sur les sentiers mystérieux de l'Art, au-delà du royaume des montagnes, le jeune homme se met en quête pour répondre à l'appel de son souverain affaibli. Mais il reste seul, pourchassé par les forces de Royal, l'usurpateur, et sans possibilité de compter sur ses propres alliés, qui le manipulent comme un simple pion.\nOr d'autres forces sont en marche... Dans son périple, Fitz va en effet se voir révéler son véritable statut : c'est par lui que s'accomplira, ou sera réduit à néant, le destin du royaume des Six-Duchés, et c'est là une charge bien lourde à porter quand on est traqué par ses ennemis, trahi par ses proches, et affaibli par la magie...",
+    "coverImage": "https://www.babelio.com/couv/CVT_15529_834678.jpg",
+    "series": "L’Assassin Royal",
+    "order": "5/13"
   }
 ]

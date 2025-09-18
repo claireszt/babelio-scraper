@@ -53,6 +53,7 @@ async function startScraper() {
     } catch (err) {
       attempt++;
       console.error(`❌ Scraper crashed (attempt ${attempt})`);
+      console.error(err.message);
       await browser.close();
 
       if (attempt < maxAttempts) {

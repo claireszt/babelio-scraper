@@ -8,6 +8,15 @@ on:
 jobs:
   scrape:
     runs-on: ubuntu-latest
+
+    env:
+      BABELIO_EMAIL: ${{ secrets.BABELIO_EMAIL }}
+      BABELIO_PASSWORD: ${{ secrets.BABELIO_PASSWORD }}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+      NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+      RELATED_BOOKS_PAGE_ID: ${{ secrets.RELATED_BOOKS_PAGE_ID }}
+
     steps:
       - name: 📥 Checkout repository
         uses: actions/checkout@v4

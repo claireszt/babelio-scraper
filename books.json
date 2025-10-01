@@ -398,8 +398,8 @@
   {
     "title": "Les Aventuriers de la Mer, Tome 1 : le Vaisseau Magique",
     "author": "Robin Hobb",
-    "status": "To Read",
-    "readDate": null,
+    "status": "Read",
+    "readDate": "2025-09-02",
     "link": "https://www.babelio.com/livres/Hobb-Les-Aventuriers-de-la-mer-tome-1--Le-vaisseau-mag/104388",
     "summary": "Les vivenefs sont des vaisseaux magiques liés à la famille qui les possède par des liens empathiques. Ces navires sont insaisissables, ils bravent les tempêtes, évitent les récifs, distancent les monstres marins, sèment les pirates... Et sont surtout l'objet de toutes les convoitises\nVivacia est la vivenef de la famille Vestrit. Le capitaine Ephron Vestrit est mourant et, parmi les siens, chacun ourdit complots et traîtrises pour s'approprier son vaisseau, car l'héritage d'une vivenef ne se transmet pas comme un legs normal. Et ce tandis que d'autres dangers se profilent à l'horizon : les serpents de mer qui infestent les océans se regroupent, et un ambitieux pirate aspire à unir ses pairs sous un seul pavillon : le sien..",
     "coverImage": "https://www.babelio.com/couv/CVT_Les-Aventuriers-de-la-mer-Tome-1--Le-vaisseau-mag_583.jpg",
@@ -755,8 +755,8 @@
     "link": "https://www.babelio.com/livres/Gaiman-American-Gods/6910",
     "summary": "À peine sorti de prison, Ombre rencontre Voyageur, un personnage intrigant. Dieu antique, comme le suggèrent les indices énigmatiques qu'il sème à longueur de temps, fou furieux ou bien simple arnaqueur ? En quoi consiste le travail qu'il propose à Ombre ? En acceptant d'entrer à son service, ce dernier plonge au coeur d'un conflit qui le dépasse, opposant héros mythologiques de l'Ancien Monde et nouvelles idoles profanes de l'Amérique. Mais comment savoir qui tire véritablement les ficelles : ces entités légendaires saxonnes issues de l'aube des temps ou les puissances du consumérisme et de la technologie ? À moins que ce ne soit le mystérieux M. Monde...",
     "coverImage": "https://www.babelio.com/couv/CVT_American-Gods_214.jpeg",
-    "series": "",
-    "order": null
+    "series": "American Gods",
+    "order": "1/5"
   },
   {
     "title": "Vanja et le Loup, Tome 1",
@@ -1658,7 +1658,7 @@
     "summary": "Une légende peut-elle tuer ?\nSept ont été choisis.\nLeur mission, libérer l'humanité du plus grand secret de l'histoire.\nReprenant connaissance au beau milieu d'un désert, ils ne savent rien les uns des autres, ni pourquoi ils ont été désignés.\nPourtant chacun porte en lui une pièce du grand mystère...\nBientôt commencera un voyage épique qui les transportera au-delà de leurs rêves les plus fous.\nMais avant, la plus jeune d'entre eux, Briséïs, devra survivre à leur pire cauchemar : La Citadelle Intemporelle.\nLa Citadelle Intemporelle est le premier roman palpitant de la série fantastique Briséïs. Si vous aimez les héros atypiques, les aventures extra-dimensionnelles et les mystères surnaturels, vous allez adorer l'univers imaginatif de Tiphaine Siovel.\nDécouvrez Briséïs dès aujourd'hui !",
     "coverImage": "https://www.babelio.com/couv/CVT_Briseis-tome-1--La-citadelle-intemporelle_9795.jpg",
     "series": "Briséïs",
-    "order": "1/4"
+    "order": "1/3"
   },
   {
     "title": "Tarot, Tome 1 : le Dernier Soleil",
@@ -2495,5 +2495,16 @@
     "coverImage": "https://www.babelio.com/couv/CVT_Reinventer-lamour_3430.jpg",
     "series": "",
     "order": null
+  },
+  {
+    "title": "L’Assassin Royal, Tome 5 : la Voie Magique",
+    "author": "Robin Hobb",
+    "status": "Read",
+    "readDate": "2025-08-10",
+    "link": "https://www.babelio.com/livres/Hobb-LAssassin-royal-tome-5--La-voie-magique/7214",
+    "summary": "Le roi Vérité est vivant ! Il a imposé une ultime mission à Fitz: \"Rejoins-moi !\"\nLoin sur les sentiers mystérieux de l'Art, au-delà du royaume des montagnes, le jeune homme se met en quête pour répondre à l'appel de son souverain affaibli. Mais il reste seul, pourchassé par les forces de Royal, l'usurpateur, et sans possibilité de compter sur ses propres alliés, qui le manipulent comme un simple pion.\nOr d'autres forces sont en marche... Dans son périple, Fitz va en effet se voir révéler son véritable statut : c'est par lui que s'accomplira, ou sera réduit à néant, le destin du royaume des Six-Duchés, et c'est là une charge bien lourde à porter quand on est traqué par ses ennemis, trahi par ses proches, et affaibli par la magie...",
+    "coverImage": "https://www.babelio.com/couv/CVT_15529_834678.jpg",
+    "series": "L’Assassin Royal",
+    "order": "5/13"
   }
 ]

@@ -27,16 +27,17 @@ jobs:
         run: npm install
 
       - name: 🛠️ Debug Environment Variables
-        env:
-          BABELIO_EMAIL: ${{ secrets.BABELIO_EMAIL }}
-          BABELIO_PASSWORD: ${{ secrets.BABELIO_PASSWORD }}
         run: |
           echo "🔍 Checking environment variables..."
-          if [[ -z "$BABELIO_EMAIL" || -z "$BABELIO_PASSWORD" ]]; then
-            echo "❌ ERROR: Missing environment variables!"
-            exit 1
-          fi
-          echo "✅ Environment variables loaded successfully."
+
+          for VAR in BABELIO_EMAIL BABELIO_PASSWORD GH_TOKEN NOTION_DATABASE_ID NOTION_TOKEN RELATED_BOOKS_PAGE_ID
+          do
+            if [[ -z "${!VAR}" ]]; then
+              echo "❌ ERROR: $VAR is missing!"
+            else
+              echo "✅ $VAR is set"
+            fi
+          done
 
       - name: 📡 Run Scraper
         env:

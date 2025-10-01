@@ -5,25 +5,25 @@ import { scrapeBooks } from "./scraper.js";
 import { userAgent, loginUrl } from "./config.js";
 
 puppeteerExtra.use(StealthPlugin());
+function isCI() {
+  return !!process.env.CI;
+}
 
 function getLaunchOptions() {
-  const isCI = !!process.env.CI;
-
   const options = {
-    headless: true,
+    headless: "new",
     protocolTimeout: 180000,
     args: [
       "--no-sandbox",
       "--disable-setuid-sandbox",
       "--disable-dev-shm-usage",
       "--disable-gpu",
+      "--window-size=1366,768",
     ],
   };
-
-  if (isCI && process.env.PUPPETEER_EXECUTABLE_PATH) {
+  if (isCI() && process.env.PUPPETEER_EXECUTABLE_PATH) {
     options.executablePath = process.env.PUPPETEER_EXECUTABLE_PATH;
   }
-
   return options;
 }
 
@@ -35,14 +35,34 @@ async function startScraper() {
     const browser = await puppeteerExtra.launch(getLaunchOptions());
     const page = await browser.newPage();
 
+    // 🔎 Debug wiring
+    page.setDefaultNavigationTimeout(isCI() ? 120000 : 60000);
+    page.setDefaultTimeout(isCI() ? 120000 : 60000);
+
+    page.on("console", (msg) => console.log("🖥️ page:", msg.text()));
+    page.on("requestfailed", (req) =>
+      console.log("📵 request failed:", req.url(), req.failure()?.errorText)
+    );
+    page.on("response", async (res) => {
+      if (res.request().resourceType() === "document") {
+        console.log("📄 main doc status:", res.status(), res.url());
+      }
+    });
+
     try {
       await page.setUserAgent(userAgent);
-      console.log("🚀 Starting scraper...");
+      await page.setViewport({ width: 1366, height: 768 });
 
-      await page.goto(loginUrl, {
+      console.log("🚀 Starting scraper...");
+      const resp = await page.goto(loginUrl, {
         waitUntil: "domcontentloaded",
-        timeout: 60000,
+        timeout: isCI() ? 120000 : 60000,
       });
+
+      const status = resp?.status?.() ?? 0;
+      if (status && status >= 400) {
+        throw new Error(`Main navigation returned HTTP ${status}`);
+      }
 
       await login(page);
       await scrapeBooks(page);
@@ -53,7 +73,7 @@ async function startScraper() {
     } catch (err) {
       attempt++;
       console.error(`❌ Scraper crashed (attempt ${attempt})`);
-      console.error(err.message);
+      console.error(err);
       await browser.close();
 
       if (attempt < maxAttempts) {
@@ -65,7 +85,6 @@ async function startScraper() {
       }
     }
   }
-
   console.log("🎉 All books scraped! Finishing...");
 }
 

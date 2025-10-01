@@ -2,7 +2,7 @@ name: Run Scraper Daily
 
 on:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 0 * * 1"
   workflow_dispatch:
 
 jobs:
@@ -48,13 +48,15 @@ jobs:
             fi
           done
 
-      - name: 📡 Run Scraper
+      - name: 🌐 Sanity check network
+        run: |
+          set -euxo pipefail
+          echo "Checking connectivity to login URL..."
+          curl -I --location --max-time 20 "$LOGIN_URL"
         env:
-          BABELIO_EMAIL: ${{ secrets.BABELIO_EMAIL }}
-          BABELIO_PASSWORD: ${{ secrets.BABELIO_PASSWORD }}
-          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
-          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
-          RELATED_BOOKS_PAGE_ID: ${{ secrets.RELATED_BOOKS_PAGE_ID }}
+          LOGIN_URL: "https://www.babelio.com/connection.php"
+
+      - name: 📡 Run Scraper
         run: |
           set -e 
           node index.js
